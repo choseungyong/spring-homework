@@ -1,15 +1,19 @@
 package com.domain.app.product;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(force = true)
+@AllArgsConstructor
 @Getter
 public class ProductDto {
 
-    private long id;
-    private String name;
-    private int price;
-    private String imageUrl;
+    private final long id;
+    private final String name;
+    private final int price;
+    private final String imageUrl;
 
     @Builder
     public ProductDto(Long id, String name, int price, String imageUrl){

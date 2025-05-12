@@ -11,23 +11,19 @@ public class ProductService {
 
     private final Map<Long,ProductDto> products = new HashMap<>();
 
-    private final AtomicLong sequence = new AtomicLong(1001);
-
     public ProductDto findById(Long id){
         return products.get(id);
     }
 
     public ProductDto save(ProductDto dto){
-        Long id = sequence.getAndIncrement();
-
         ProductDto saved = ProductDto.builder()
-                .id(id)
+                .id(dto.getId())
                 .name(dto.getName())
                 .price(dto.getPrice())
                 .imageUrl(dto.getImageUrl())
                 .build();
 
-        products.put(id, saved);
+        products.put(dto.getId(), saved);
         return saved;
     }
 
