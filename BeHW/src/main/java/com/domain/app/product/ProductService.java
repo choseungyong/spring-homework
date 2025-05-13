@@ -2,28 +2,35 @@ package com.domain.app.product;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class ProductService {
 
     private final Map<Long,ProductDto> products = new HashMap<>();
+    private long sequence = 1L;
+
+    public List<ProductDto> getAll() {
+        return new ArrayList<>(products.values());
+    }
 
     public ProductDto findById(Long id){
         return products.get(id);
     }
 
     public ProductDto save(ProductDto dto){
+        Long Id = sequence++;
         ProductDto saved = ProductDto.builder()
-                .id(dto.getId())
+                .id(Id)
                 .name(dto.getName())
                 .price(dto.getPrice())
                 .imageUrl(dto.getImageUrl())
                 .build();
 
-        products.put(dto.getId(), saved);
+        products.put(Id, saved);
         return saved;
     }
 
