@@ -1,5 +1,7 @@
 package com.domain.app.product;
 
+import com.domain.app.product.domain.Product;
+import com.domain.app.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,23 +15,23 @@ public class ProductController {
     private final ProductService productservice;
 
     @GetMapping
-    public List<ProductDto> getAll() {
+    public List<Product> getAll() {
         return productservice.getAll();
     }
 
     @GetMapping("/{id}")
-    public ProductDto getInfo(@PathVariable Long id){
+    public Product getInfo(@PathVariable Long id){
         return productservice.findById(id);
     }
 
     @PostMapping
-    public ProductDto create(@RequestBody ProductDto dto) {
-        return productservice.save(dto);
+    public Product create(@RequestBody Product product) {
+        return productservice.save(product);
     }
 
     @PutMapping("/{id}")
-    public ProductDto update(@PathVariable Long id, @RequestBody ProductDto dto){
-        return productservice.update(id,dto);
+    public Product update(@PathVariable Long id, @RequestBody Product product){
+        return productservice.update(id,product);
     }
 
     @DeleteMapping("/{id}")

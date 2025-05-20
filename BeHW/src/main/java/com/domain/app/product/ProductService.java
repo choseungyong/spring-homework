@@ -1,53 +1,42 @@
 package com.domain.app.product;
 
+import com.domain.app.product.domain.Product;
+import com.domain.app.product.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
 
-    private final Map<Long,ProductDto> products = new HashMap<>();
-    private long sequence = 1L;
+    private final ProductRepository productRepository;
 
-    public List<ProductDto> getAll() {
-        return new ArrayList<>(products.values());
+    public List<Product> getAll() {
+        return productRepository.findAll();
     }
 
-    public ProductDto findById(Long id){
-        return products.get(id);
+    public Product findById(Long id){
+        return productRepository.findById(id).orElseThrow();
     }
 
-    public ProductDto save(ProductDto dto){
-        Long Id = sequence++;
-        ProductDto saved = ProductDto.builder()
-                .id(Id)
-                .name(dto.getName())
-                .price(dto.getPrice())
-                .imageUrl(dto.getImageUrl())
-                .build();
-
-        products.put(Id, saved);
-        return saved;
+    public Product save(Product product){
+        return productRepository.save(product);
     }
 
-    public ProductDto update(Long id, ProductDto dto){
-
-        ProductDto updated = ProductDto.builder()
+    public Product update(Long id, Product Data){
+        Product existing = productRepository.findById(id).orElseThrow();
+        existing = Product.builder()
                 .id(id)
-                .name(dto.getName())
-                .price(dto.getPrice())
-                .imageUrl(dto.getImageUrl())
+                .name(Data.getName())
+                .price(Data.getPrice())
+                .imageUrl(Data.getImageUrl())
                 .build();
-
-        products.put(id,updated);
-        return updated;
+        return productRepository.save(existing);
     }
 
     public void delete(Long id){
-        products.remove(id);
+        productRepository.deleteById(id);
     }
 }

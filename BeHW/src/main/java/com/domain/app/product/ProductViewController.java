@@ -1,11 +1,13 @@
+
 package com.domain.app.product;
 
+import com.domain.app.product.domain.Product;
+import com.domain.app.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -17,38 +19,36 @@ public class ProductViewController {
 
     @GetMapping
     public String list(Model model) {
-        List<ProductDto> products = new ArrayList<>(productservice.getAll());
+        List<Product> products = productservice.getAll();
         model.addAttribute("products", products);
         return "products/list";
     }
 
     @GetMapping("/new")
     public String newForm(Model model) {
-        model.addAttribute("product", new ProductDto(0L, "", 0, ""));
+        model.addAttribute("product", new Product(0L, "", 0, ""));
         return "products/form";
     }
 
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable Long id, Model model) {
-        ProductDto dto = productservice.findById(id);
-        model.addAttribute("product", dto);
+        Product product = productservice.findById(id);
+        model.addAttribute("product", product);
         return "products/form";
     }
 
     @PostMapping
-    public String save(@RequestParam Long id,
-                       @RequestParam String name,
+    public String save (@RequestParam String name,
                        @RequestParam int price,
                        @RequestParam String imageUrl) {
 
-        ProductDto dto = ProductDto.builder()
-                .id(id)
+        Product product = Product.builder()
                 .name(name)
                 .price(price)
                 .imageUrl(imageUrl)
                 .build();
 
-        productservice.save(dto);
+        productservice.save(product);
         return "redirect:/admin/products";
     }
 
@@ -58,14 +58,14 @@ public class ProductViewController {
                          @RequestParam int price,
                          @RequestParam String imageUrl) {
 
-        ProductDto dto = ProductDto.builder()
+        Product product = Product.builder()
                 .id(id)
                 .name(name)
                 .price(price)
                 .imageUrl(imageUrl)
                 .build();
 
-        productservice.update(id, dto);
+        productservice.update(id, product);
         return "redirect:/admin/products";
     }
 
@@ -75,4 +75,3 @@ public class ProductViewController {
         return "redirect:/admin/products";
     }
 }
-
