@@ -1,4 +1,4 @@
-package com.domain.app.product;
+package com.domain.app.product.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Getter
-public class ProductDto {
+public class ProductResponseDto {
 
     private final long id;
     private final String name;
@@ -16,7 +16,7 @@ public class ProductDto {
     private final String imageUrl;
 
     @Builder
-    public ProductDto(Long id, String name, int price, String imageUrl){
+    public ProductResponseDto(Long id, String name, int price, String imageUrl){
         this.id = id;
         this.name = name;
         this.price = price;
