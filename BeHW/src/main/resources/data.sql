@@ -3,3 +3,6 @@ INSERT INTO products (name, price, image_url) VALUES
 ('초코 케이크', 5500, 'https://cdn-icons-png.flaticon.com/512/685/685352.png'),
 ('오렌지 주스', 4000, 'https://cdn-icons-png.flaticon.com/512/135/135620.png'),
 ('핫도그', 5200, 'https://cdn-icons-png.flaticon.com/512/1046/1046784.png');
+
+INSERT INTO member (email, password, role)
+VALUES ('admin@email.com', '{bcrypt}$2a$10$ZcsAgx1VA7Z4Ub5WUhpvteREoSTH43Wby/pBSe6vCNlrGwJUls9EO', 'ADMIN');
